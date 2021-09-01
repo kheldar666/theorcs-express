@@ -15,7 +15,12 @@ export class IndexController {
   async get(@Session() session: any) {
     console.log(session);
     const newUser = new this.User({ name: "Martin Papy" });
-    const user = await this.userService.save(newUser);
-    return { message: "home page", user: user };
+    //const user = await this.userService.save(newUser);
+    return {
+      infoMessage:
+        "<strong>Holy guacamole!</strong> You should check in on some of those fields below.",
+      errorMessage: "undefined",
+      user: newUser,
+    };
   }
 }
