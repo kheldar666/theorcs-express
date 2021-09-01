@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { PlatformTest } from "@tsed/common";
-import { HelloWorldController } from "../../controllers/rest/HelloWorldController";
+import { HelloWorldController } from "../../src/controllers/rest/HelloWorldController";
 
 describe("HelloWorldController", () => {
   beforeEach(PlatformTest.create);

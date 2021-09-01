@@ -1,8 +1,8 @@
 import { expect } from "chai";
 import { PlatformTest } from "@tsed/common";
 import SuperTest from "supertest";
-import { HelloWorldController } from "../../controllers/rest/HelloWorldController";
-import { Server } from "../../Server";
+import { HelloWorldController } from "../../src/controllers/rest/HelloWorldController";
+import { Server } from "../../src/Server";
 
 describe("HelloWorldController", () => {
   let request: SuperTest.SuperTest<SuperTest.Test>;

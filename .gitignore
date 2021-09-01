@@ -51,4 +51,6 @@ test/**/*.js.map
 # Project
 /public
 /dist
-!/.env.dev
+.env.dev
+.env
+.env.test

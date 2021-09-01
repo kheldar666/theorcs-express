@@ -9,12 +9,13 @@ import cors from "cors";
 import "@tsed/ajv";
 import "@tsed/mongoose";
 import { config, rootDir } from "./config";
+import helmet from "helmet";
 
 @Configuration({
   ...config,
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
-  httpsPort: false, // CHANGE
+  httpsPort: false,
   mount: {
     "/rest": [`${rootDir}/controllers/rest/**/*.ts`],
     "/": [`${rootDir}/controllers/web/**/*.ts`],
@@ -25,7 +26,14 @@ import { config, rootDir } from "./config";
       ejs: "ejs",
     },
   },
-  exclude: ["**/*.spec.ts"],
+  statics: {
+    "/": [
+      {
+        root: `${rootDir}/public`,
+        options: { index: false, maxAge: "1d" },
+      },
+    ],
+  },
 })
 export class Server {
   @Inject()
@@ -37,6 +45,7 @@ export class Server {
   $beforeRoutesInit(): void {
     this.app
       .use(cors())
+      .use(helmet())
       .use(cookieParser())
       .use(compress({}))
       .use(methodOverride())

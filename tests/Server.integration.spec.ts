@@ -1,7 +1,7 @@
 import { PlatformTest } from "@tsed/common";
 import SuperTest from "supertest";
 import { expect } from "chai";
-import { Server } from "../Server";
+import { Server } from "../src/Server";
 
 describe("Server", () => {
   let request: SuperTest.SuperTest<SuperTest.Test>;

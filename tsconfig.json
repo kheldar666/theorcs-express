@@ -36,7 +36,8 @@
     "node_modules",
     "./public",
     "dist",
-    "test"
+    "test",
+    "./src/views"
   ],
   "linterOptions": {
     "exclude": []
