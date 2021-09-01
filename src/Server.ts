@@ -10,6 +10,12 @@ import "@tsed/ajv";
 import "@tsed/mongoose";
 import { config, rootDir } from "./config";
 import helmet from "helmet";
+import csurf from "csurf";
+import ConnectMongoDBSession from "connect-mongodb-session";
+import session from "express-session";
+import flash from "connect-flash";
+import { InitSessionMiddleware } from "./middlewares/InitSessionMiddleware";
+const mongoDbSession = ConnectMongoDBSession(session);
 
 @Configuration({
   ...config,
@@ -20,6 +26,10 @@ import helmet from "helmet";
     "/rest": [`${rootDir}/controllers/rest/**/*.ts`],
     "/": [`${rootDir}/controllers/web/**/*.ts`],
   },
+  componentsScan: [
+    `${rootDir}/services/**/**.ts`,
+    `${rootDir}/middlewares/**/**.ts`,
+  ],
   views: {
     root: `${rootDir}/views`,
     extensions: {
@@ -55,5 +65,26 @@ export class Server {
           extended: true,
         })
       );
+
+    /**
+     * cf. http://expressjs.com/en/guide/behind-proxies.html
+     */
+    this.app.getApp().set("trust proxy", process.env.TRUST_PROXY || 1);
+    this.app.use(
+      session({
+        secret: process.env.SESSION_SECRET || "changeme",
+        resave: false,
+        saveUninitialized: false,
+        store: new mongoDbSession({
+          uri:
+            process.env.MONGODB_CONNECTION_STRING ||
+            "mongodb://localhost:27017/default",
+          collection: "sessions",
+        }),
+      })
+    );
+    this.app.use(flash());
+    this.app.use(csurf());
+    this.app.use(InitSessionMiddleware);
   }
 }
