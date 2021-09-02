@@ -15,7 +15,7 @@ import ConnectMongoDBSession from "connect-mongodb-session";
 import session from "express-session";
 import { flash } from "express-flash-message";
 import { InitSession } from "./middlewares/InitSession";
-import { FlashErrorMessage } from "./middlewares/FlashErrorMessage";
+
 const mongoDbSession = ConnectMongoDBSession(session);
 
 @Configuration({

@@ -1,4 +1,4 @@
-import { IMiddleware, Middleware, Next, Req } from "@tsed/common";
+import { IMiddleware, Middleware, Session } from "@tsed/common";
 
 declare module "express-session" {
   interface SessionData {
@@ -9,10 +9,10 @@ declare module "express-session" {
 
 @Middleware()
 export class InitSession implements IMiddleware {
-  use(@Req() request: Req): void {
-    if (request.session && !request.session.isStarted) {
-      request.session.isStarted = true;
-      request.session.isAuthenticated = false;
+  use(@Session() session: any): void {
+    if (session && !session.isStarted) {
+      session.isStarted = true;
+      session.isAuthenticated = false;
     }
   }
 }
