@@ -50,7 +50,6 @@
     "@types/chai": "^4.2.21",
     "@types/chai-as-promised": "^7.1.4",
     "@types/compression": "^1.7.1",
-    "@types/connect-flash": "^0.0.37",
     "@types/connect-mongodb-session": "^2.4.2",
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.12",
