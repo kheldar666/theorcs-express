@@ -13,8 +13,9 @@ import helmet from "helmet";
 import csurf from "csurf";
 import ConnectMongoDBSession from "connect-mongodb-session";
 import session from "express-session";
-import flash from "connect-flash";
-import { InitSessionMiddleware } from "./middlewares/InitSessionMiddleware";
+import { flash } from "express-flash-message";
+import { InitSession } from "./middlewares/InitSession";
+import { FlashErrorMessage } from "./middlewares/FlashErrorMessage";
 const mongoDbSession = ConnectMongoDBSession(session);
 
 @Configuration({
@@ -83,8 +84,8 @@ export class Server {
         }),
       })
     );
-    this.app.use(flash());
+    this.app.use(flash({ sessionKeyName: "flashMessage" }));
     this.app.use(csurf());
-    this.app.use(InitSessionMiddleware);
+    this.app.use(InitSession);
   }
 }

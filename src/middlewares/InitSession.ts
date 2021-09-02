@@ -8,7 +8,7 @@ declare module "express-session" {
 }
 
 @Middleware()
-export class InitSessionMiddleware implements IMiddleware {
+export class InitSession implements IMiddleware {
   use(@Req() request: Req): void {
     if (request.session && !request.session.isStarted) {
       request.session.isStarted = true;

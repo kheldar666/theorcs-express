@@ -8,7 +8,7 @@ if (require.main) {
 }
 
 export const config = require("dotenv").config({
-  path: `${rootDir}/.env.${process.env.NODE_ENV}`,
+  path: `${rootDir}/.env`,
 });
 
 export const isProduction = process.env.NODE_ENV === "production";

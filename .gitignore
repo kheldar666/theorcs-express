@@ -45,6 +45,4 @@ typings/
 # Project
 /public
 /dist
-.env.dev
 .env
-.env.test
