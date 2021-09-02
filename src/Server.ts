@@ -1,5 +1,5 @@
-import { Configuration, Inject } from "@tsed/di";
-import { PlatformApplication } from "@tsed/common";
+import {Configuration, Inject} from "@tsed/di";
+import {PlatformApplication} from "@tsed/common";
 import "@tsed/platform-express"; // /!\ keep this import
 import bodyParser from "body-parser";
 import compress from "compression";
@@ -8,13 +8,13 @@ import methodOverride from "method-override";
 import cors from "cors";
 import "@tsed/ajv";
 import "@tsed/mongoose";
-import { config, rootDir } from "./config";
+import {config, rootDir} from "./config";
 import helmet from "helmet";
 import csurf from "csurf";
 import ConnectMongoDBSession from "connect-mongodb-session";
 import session from "express-session";
-import { flash } from "express-flash-message";
-import { InitSession } from "./middlewares/InitSession";
+import {flash} from "express-flash-message";
+import {InitSession} from "./middlewares/InitSession";
 
 const mongoDbSession = ConnectMongoDBSession(session);
 
