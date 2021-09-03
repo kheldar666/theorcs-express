@@ -26,5 +26,7 @@ export class User extends UserDetails implements UserProps {
     return this._id;
   }
 
-  verifyPassword(password: string) {}
+  verifyPassword(password: string): boolean {
+    return this.password === password;
+  }
 }

@@ -16,7 +16,6 @@ import session from "express-session";
 import { flash } from "express-flash-message";
 import { InitSession } from "./middlewares/InitSession";
 import { FlashErrorMessage } from "./middlewares/FlashErrorMessage";
-import { UserService } from "./services/UserService";
 
 const mongoDbSession = ConnectMongoDBSession(session);
 
@@ -32,6 +31,7 @@ const mongoDbSession = ConnectMongoDBSession(session);
   componentsScan: [
     `${rootDir}/services/**/**.ts`,
     `${rootDir}/middlewares/**/**.ts`,
+    `${rootDir}/modules/**/**.ts`,
   ],
   views: {
     root: `${rootDir}/views`,
@@ -90,13 +90,5 @@ export class Server {
       .use(csurf())
       .use(InitSession)
       .use(FlashErrorMessage);
-  }
-
-  async $beforeListen(@Inject(UserService) userService: UserService) {
-    try {
-      await userService.initData();
-    } catch (err) {
-      throw err;
-    }
   }
 }
