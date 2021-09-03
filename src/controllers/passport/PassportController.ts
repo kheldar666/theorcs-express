@@ -6,7 +6,7 @@ import { Returns, Security } from "@tsed/schema";
 import { UserDetails } from "../../models/UserDetails";
 
 @Controller("/")
-export class PassportCtrl {
+export class PassportController {
   @Post("/login")
   @Authenticate("login", {
     failWithError: false,
