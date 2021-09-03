@@ -17,17 +17,23 @@ export class LoginLocalProtocol implements OnVerify, OnInstall {
   constructor(private userService: UserService) {}
 
   async $onVerify(@Req() request: Req, @BodyParams() credentials: Credentials) {
-    $log.debug("=========== Authentication ===========");
+    $log.debug({
+      Context: "LoginLocalProtocol.$onVerify",
+      message: "=========== Authentication ===========",
+    });
     const { email, password } = credentials;
     try {
       const user = await this.userService.findOne({ email: email });
       if (!user.verifyPassword(password)) {
         throw new Unauthorized("Passwords do not match");
       }
-      $log.debug("=========== Authentication Successful ===========");
+      $log.debug({
+        Context: "LoginLocalProtocol.$onVerify",
+        message: "=========== Authentication Successful ===========",
+      });
       return user;
     } catch (error) {
-      $log.error(error);
+      $log.error({ Context: "LoginLocalProtocol.$onVerify", error: error });
       throw new Unauthorized("Invalid Credentials");
     }
   }

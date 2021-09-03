@@ -1,10 +1,20 @@
-import { Controller, Get, Redirect, Req, Session, View } from "@tsed/common";
+import {
+  Controller,
+  Get,
+  Redirect,
+  Req,
+  Session,
+  Use,
+  View,
+} from "@tsed/common";
 import { User } from "../../models/User";
 import { UserService } from "../../services/UserService";
 import { Inject } from "@tsed/di";
 import { MongooseModel } from "@tsed/mongoose";
+import { LocalsMiddleware } from "../../middlewares/LocalsMiddleware";
 
 @Controller("/")
+@Use(LocalsMiddleware)
 export class IndexController {
   @Inject(User)
   private User: MongooseModel<User>;

@@ -16,7 +16,7 @@ import session from "express-session";
 import { flash } from "express-flash-message";
 import { InitSession } from "./middlewares/InitSession";
 import { FlashErrorMessage } from "./middlewares/FlashErrorMessage";
-import { LocalsMiddleware } from "./middlewares/LocalsMiddleware";
+import { User } from "./models/User";
 
 const mongoDbSession = ConnectMongoDBSession(session);
 
@@ -35,6 +35,9 @@ const mongoDbSession = ConnectMongoDBSession(session);
     `${rootDir}/modules/**/**.ts`,
     `${rootDir}/protocols/**/**.ts`,
   ],
+  passport: {
+    userInfoModel: User,
+  },
   views: {
     root: `${rootDir}/views`,
     extensions: {
@@ -91,7 +94,7 @@ export class Server {
       .use(flash({ sessionKeyName: "flashMessage" }))
       .use(csurf())
       .use(InitSession)
-      .use(FlashErrorMessage)
-      .use(LocalsMiddleware);
+      .use(FlashErrorMessage);
+    //.use(LocalsMiddleware);
   }
 }

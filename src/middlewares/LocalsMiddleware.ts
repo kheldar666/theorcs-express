@@ -5,6 +5,9 @@ export class LocalsMiddleware implements IMiddleware {
   use(@Locals() locals: any, @Req() req: Req): void {
     console.log("req.isAuthenticated()", req.isAuthenticated());
     if (req.isAuthenticated()) {
+      console.log("======================================");
+      console.log(req.user);
+      console.log("======================================");
       locals.isAuthenticated = true;
       locals.currentUser = req.user;
     } else {
