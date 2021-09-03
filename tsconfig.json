@@ -36,7 +36,7 @@
     "node_modules",
     "./public",
     "dist",
-    "test",
+    "tests",
     "./src/views"
   ],
   "linterOptions": {

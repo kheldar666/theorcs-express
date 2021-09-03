@@ -1,13 +1,30 @@
+import { Description, Example, Format, Property, Required } from "@tsed/schema";
+import { UserDetails } from "./UserDetails";
 import { Model, ObjectID } from "@tsed/mongoose";
-import { Description, Property, Required } from "@tsed/schema";
+import { UserProps } from "./interfaces/UserProps";
 
-@Model()
-export class User {
-  @ObjectID("id")
+@Model({ schemaOptions: { timestamps: true } })
+export class User extends UserDetails implements UserProps {
+  @ObjectID()
+  @Description("Database assigned id")
   _id: string;
 
+  @Description("User password")
+  @Example("/5gftuD/")
   @Property()
   @Required()
-  @Description("The name of the user")
-  name: string;
+  password: string;
+
+  @Description("User email")
+  @Example("user@domain.com")
+  @Format("email")
+  @Property()
+  @Required()
+  email: string;
+
+  get id(): string {
+    return this._id;
+  }
+
+  verifyPassword(password: string) {}
 }

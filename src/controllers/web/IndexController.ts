@@ -1,12 +1,10 @@
-import {Controller, Get, Redirect, Req, Session, UseAfter, View} from "@tsed/common";
+import { Controller, Get, Redirect, Req, Session, View } from "@tsed/common";
 import { User } from "../../models/User";
 import { UserService } from "../../services/UserService";
 import { Inject } from "@tsed/di";
 import { MongooseModel } from "@tsed/mongoose";
-import { FlashErrorMessage } from "../../middlewares/FlashErrorMessage";
 
 @Controller("/")
-
 export class IndexController {
   @Inject(User)
   private User: MongooseModel<User>;
@@ -15,12 +13,19 @@ export class IndexController {
 
   @Get("/")
   @View("index.ejs")
-  @UseAfter(FlashErrorMessage)
-  async get(@Session() session: any, @Req() req: Req) {
-    const newUser = new this.User({ name: "Martin Papy" });
+  async get() {
+    const userProps = {
+      firstName: "Martin",
+      lastName: "Papy",
+      email: "martin.papy@gmail.com",
+      password: "test123",
+    };
+
+    const newUser = new this.User(userProps);
+    const savedUser = await this.userService.save(newUser);
 
     return {
-      user: newUser
+      user: savedUser,
     };
   }
 

@@ -15,9 +15,8 @@
             <%- include('./includes/messages.ejs') %>
             <h2>Center</h2>
             <div>
-                <p><%= user.name %> <em><%= user._id %></em></p>
+                <p><%= user.firstName %> <%= user.lastName %> (<em><%= user.id %></em>)</p>
 
-                <p>Local Flash Counter : <%= counter %></p>
                 <p>Error Msg : <%- errorMessage %></p>
                 <p>Info Msg : <%- infoMessage %></p>
 
