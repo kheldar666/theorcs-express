@@ -50,6 +50,7 @@
     "@tsed/cli-plugin-mocha": "3.11.2",
     "@tsed/cli-plugin-mongoose": "3.11.2",
     "@tsed/testing-mongoose": "^6.64.1",
+    "@types/bcryptjs": "^2.4.2",
     "@types/chai": "^4.2.21",
     "@types/chai-as-promised": "^7.1.4",
     "@types/compression": "^1.7.1",

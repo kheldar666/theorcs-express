@@ -2,6 +2,7 @@ import { Description, Example, Format, Property, Required } from "@tsed/schema";
 import { UserDetails } from "./UserDetails";
 import { Model, ObjectID } from "@tsed/mongoose";
 import { UserProps } from "./interfaces/UserProps";
+import bcrypt from "bcryptjs";
 
 @Model({ schemaOptions: { timestamps: true } })
 export class User extends UserDetails implements UserProps {
@@ -27,6 +28,6 @@ export class User extends UserDetails implements UserProps {
   }
 
   verifyPassword(password: string): boolean {
-    return this.password === password;
+    return bcrypt.compareSync(password, this.password);
   }
 }

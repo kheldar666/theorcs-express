@@ -16,6 +16,7 @@ import session from "express-session";
 import { flash } from "express-flash-message";
 import { InitSession } from "./middlewares/InitSession";
 import { FlashErrorMessage } from "./middlewares/FlashErrorMessage";
+import { LocalsMiddleware } from "./middlewares/LocalsMiddleware";
 
 const mongoDbSession = ConnectMongoDBSession(session);
 
@@ -26,6 +27,7 @@ const mongoDbSession = ConnectMongoDBSession(session);
   httpsPort: false,
   mount: {
     "/rest": [`${rootDir}/controllers/rest/**/*.ts`],
+    "/auth": [`${rootDir}/controllers/passport/**/*.ts`],
     "/": [`${rootDir}/controllers/web/**/*.ts`],
   },
   componentsScan: [
@@ -89,6 +91,7 @@ export class Server {
       .use(flash({ sessionKeyName: "flashMessage" }))
       .use(csurf())
       .use(InitSession)
-      .use(FlashErrorMessage);
+      .use(FlashErrorMessage)
+      .use(LocalsMiddleware);
   }
 }

@@ -3,7 +3,6 @@ import { User } from "../../models/User";
 import { UserService } from "../../services/UserService";
 import { Inject } from "@tsed/di";
 import { MongooseModel } from "@tsed/mongoose";
-import { UserProps } from "../../models/interfaces/UserProps";
 
 @Controller("/")
 export class IndexController {
@@ -14,22 +13,7 @@ export class IndexController {
 
   @Get("/")
   @View("index.ejs")
-  async get() {
-    const userProps: UserProps = {
-      id: "",
-      firstName: "Martin",
-      lastName: "Papy",
-      email: "martin.papy@gmail.com",
-      password: "test123",
-    };
-
-    const newUser = new this.User(userProps);
-    const savedUser = await this.userService.save(newUser);
-
-    return {
-      user: savedUser,
-    };
-  }
+  get() {}
 
   @Get("/set")
   @Redirect(302, "/")

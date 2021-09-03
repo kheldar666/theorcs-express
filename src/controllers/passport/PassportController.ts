@@ -5,21 +5,18 @@ import { User } from "../../models/User";
 import { Returns, Security } from "@tsed/schema";
 import { UserDetails } from "../../models/UserDetails";
 
-@Controller("/auth")
+@Controller("/")
 export class PassportCtrl {
-  constructor() {}
-
   @Post("/login")
-  @Authenticate("login", { failWithError: false })
-  @Returns(200, User)
-  @(Returns(400).Description("Validation error"))
-  login(@Req() req: Req, @BodyParams() credentials: Credentials) {
-    // FACADE
-    return req.user;
-  }
+  @Authenticate("login", {
+    failWithError: false,
+    failureFlash: true,
+    successRedirect: "/",
+    failureRedirect: "/",
+  })
+  login(@Req() req: Req, @BodyParams() credentials: Credentials) {}
 
   @Post("/signup")
-  @Returns(201, User)
   @Authenticate("signup")
   signup(@Req() req: Req, @BodyParams() user: UserDetails) {
     // FACADE
