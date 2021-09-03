@@ -27,13 +27,13 @@ const mongoDbSession = ConnectMongoDBSession(session);
   httpsPort: false,
   mount: {
     "/rest": [`${rootDir}/controllers/rest/**/*.ts`],
-    "/auth": [`${rootDir}/controllers/passport/**/*.ts`],
     "/": [`${rootDir}/controllers/web/**/*.ts`],
   },
   componentsScan: [
     `${rootDir}/services/**/**.ts`,
     `${rootDir}/middlewares/**/**.ts`,
     `${rootDir}/modules/**/**.ts`,
+    `${rootDir}/protocols/**/**.ts`,
   ],
   views: {
     root: `${rootDir}/views`,

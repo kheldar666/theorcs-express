@@ -20,33 +20,39 @@ export class UserService {
   private User: MongooseModel<User>;
 
   async find(id: string): Promise<User> {
-    $log.debug("Search a User from ID", id);
+    $log.debug({ Context: "UserService.find", id: id });
 
     const user = await this.User.findById(id);
     if (user) {
-      $log.debug("Found User", user);
+      $log.debug({
+        Context: "UserService.find",
+        message: "User found",
+        user: user,
+      });
       return user;
     }
     throw new NotFound("User not found");
   }
 
-  @Intercept(EncryptPasswordInterceptor, { key1: "value1", key2: "value2" })
+  @Intercept(EncryptPasswordInterceptor)
   async save(user: User): Promise<User> {
-    $log.debug({ message: "Validate user", user });
+    $log.debug({ Context: "UserService.save", user: user });
 
     //TODO: Validate the user input
     const model = new this.User(user);
-    $log.debug({ message: "Save user", user });
+    $log.debug({ Context: "UserService.save", message: "Saving user" });
     await model.updateOne(user, { upsert: true });
 
-    $log.debug({ message: "User saved", model });
+    $log.debug({ Context: "UserService.save", message: "User saved" });
 
     return model;
   }
 
   async findOne(predicate: Partial<User>): Promise<User> {
-    const aUser = await this.User.findOne(predicate).exec();
+    $log.debug({ Context: "UserService.findOne", predicate: predicate });
+    const aUser = await this.User.findOne(predicate);
     if (aUser) {
+      $log.debug({ Context: "UserService.findOne", result: aUser });
       return aUser;
     }
     throw new NotFound("User not found");

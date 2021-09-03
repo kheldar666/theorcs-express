@@ -13,7 +13,12 @@ export class IndexController {
 
   @Get("/")
   @View("index.ejs")
-  get() {}
+  get(@Req() req: Req) {
+    return {
+      reqIsAuthenticated: req.isAuthenticated(),
+      reqUser: req.user,
+    };
+  }
 
   @Get("/set")
   @Redirect(302, "/")

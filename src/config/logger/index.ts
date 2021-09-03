@@ -1,5 +1,6 @@
 import { $log, PlatformLoggerSettings } from "@tsed/common";
 import { isProduction } from "../env";
+import { LogLevel } from "./LogLevel";
 
 if (isProduction) {
   $log.appenders.set("stdout", {
@@ -21,5 +22,7 @@ if (isProduction) {
 
 export const loggerConfig: Partial<PlatformLoggerSettings> = {
   disableRoutesSummary: isProduction,
-  level: "debug",
+  level: process.env.LOG_LEVEL
+    ? LogLevel[process.env.LOG_LEVEL as keyof typeof LogLevel]
+    : "info",
 };

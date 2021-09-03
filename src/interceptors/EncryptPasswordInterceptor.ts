@@ -21,15 +21,25 @@ export class EncryptPasswordInterceptor implements InterceptorMethods {
    * opts: Static params that can be provided when the interceptor is attached to a specific method
    */
   async intercept(context: InterceptorContext<any>, next: InterceptorNext) {
-    $log.debug("Executing EncryptPasswordInterceptor");
+    $log.debug({
+      Context: "EncryptPasswordInterceptor.intercept",
+      message: "Executing EncryptPasswordInterceptor",
+    });
+
     if (context.propertyKey === "save" && context.args[0]["password"]) {
       const credentials: Credentials = context.args[0];
       if (!credentials.password.match(this.bcryptRegEx)) {
-        $log.debug("EncryptPasswordInterceptor: Encrypting Password");
+        $log.debug({
+          Context: "EncryptPasswordInterceptor.intercept",
+          message: "Encrypting password",
+        });
         const encryptedPassword = await bcrypt.hash(credentials.password, 12);
         credentials.password = encryptedPassword;
       } else {
-        $log.debug("EncryptPasswordInterceptor: Password already encrypted");
+        $log.debug({
+          Context: "EncryptPasswordInterceptor.intercept",
+          message: "Password already encrypted",
+        });
       }
     }
     // let the original method by calling next function
