@@ -33,7 +33,7 @@ export class LoginLocalProtocol implements OnVerify, OnInstall {
       });
       return user;
     } catch (error) {
-      $log.error({ Context: "LoginLocalProtocol.$onVerify", error: error });
+      $log.info({ Context: "LoginLocalProtocol.$onVerify", error: error });
       throw new Unauthorized("Invalid Credentials");
     }
   }

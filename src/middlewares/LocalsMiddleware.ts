@@ -1,15 +1,21 @@
-import { IMiddleware, Locals, Middleware, Req } from "@tsed/common";
+import { $log, IMiddleware, Locals, Middleware, Req } from "@tsed/common";
+import { LogLevel } from "../config/logger/LogLevel";
 
 @Middleware()
 export class LocalsMiddleware implements IMiddleware {
   use(@Locals() locals: any, @Req() req: Req): void {
-    console.log("req.isAuthenticated()", req.isAuthenticated());
+    if ($log.isLevelEnabled(LogLevel.DEBUG)) {
+      $log.debug({
+        Context: "LocalsMiddleware.use",
+        isAuthenticated: req.isAuthenticated(),
+      });
+    }
     if (req.isAuthenticated()) {
-      console.log("======================================");
-      console.log(req.user);
-      console.log("======================================");
       locals.isAuthenticated = true;
       locals.currentUser = req.user;
+      if ($log.isLevelEnabled(LogLevel.DEBUG)) {
+        $log.debug({ Context: "LocalsMiddleware.use", currentUser: req.user });
+      }
     } else {
       locals.isAuthenticated = false;
       locals.currentUser = undefined;
