@@ -3,6 +3,15 @@ import { MongooseModel } from "@tsed/mongoose";
 import { User } from "../models/User";
 import { $log } from "@tsed/common";
 import { NotFound } from "@tsed/exceptions";
+import { UserProps } from "../models/interfaces/UserProps";
+
+const defaultUser: UserProps = {
+  id: "",
+  firstName: "Admin",
+  lastName: "Admin",
+  email: "admin@localhost",
+  password: "password",
+};
 
 @Service()
 export class UserService {
@@ -31,5 +40,29 @@ export class UserService {
     $log.debug({ message: "User saved", model });
 
     return model;
+  }
+
+  async findOne(): Promise<User> {
+    const aUser = await this.User.findOne().exec();
+    if (aUser) {
+      return aUser;
+    }
+    throw new NotFound("User not found");
+  }
+
+  async initData(): Promise<void> {
+    $log.debug("Initializing User Data");
+    try {
+      await this.findOne();
+      $log.debug("Found existing data. Initialization not required");
+    } catch (err) {
+      $log.debug("No User data found. Creating a default user");
+      try {
+        const defUser = await this.User.create(defaultUser);
+        $log.debug("Created Default User", defUser);
+      } catch (err) {
+        throw err;
+      }
+    }
   }
 }

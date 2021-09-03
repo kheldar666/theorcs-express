@@ -16,6 +16,7 @@ import session from "express-session";
 import { flash } from "express-flash-message";
 import { InitSession } from "./middlewares/InitSession";
 import { FlashErrorMessage } from "./middlewares/FlashErrorMessage";
+import { UserService } from "./services/UserService";
 
 const mongoDbSession = ConnectMongoDBSession(session);
 
@@ -89,5 +90,13 @@ export class Server {
       .use(csurf())
       .use(InitSession)
       .use(FlashErrorMessage);
+  }
+
+  async $beforeListen(@Inject(UserService) userService: UserService) {
+    try {
+      await userService.initData();
+    } catch (err) {
+      throw err;
+    }
   }
 }
