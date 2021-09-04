@@ -6,14 +6,13 @@ import { LoginData } from "../../../models/forms/LoginData";
 @Controller("/auth")
 export class PassportController {
   @Post("/login")
-  @Authenticate("login")
+  @Authenticate("login", {
+    failureRedirect: "/",
+    failureFlash: "Invalid Credentials",
+  })
   @Redirect(302, "/")
   async login(@Req() req: Req, @BodyParams() loginData: LoginData) {
-    if (!req.isAuthenticated()) {
-      await req.flash("error", "Invalid Credentials");
-    } else {
-      await req.flash("info", "Login successful");
-    }
+    await req.flash("error", "Invalid Credentials");
   }
 
   @Post("/signup")
