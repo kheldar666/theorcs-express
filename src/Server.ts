@@ -16,7 +16,7 @@ import session from "express-session";
 import { flash } from "express-flash-message";
 import { InitSession } from "./middlewares/InitSession";
 import { FlashErrorMessage } from "./middlewares/FlashErrorMessage";
-import { User } from "./models/User";
+import { UserInfo } from "@tsed/passport";
 
 const mongoDbSession = ConnectMongoDBSession(session);
 
@@ -36,7 +36,7 @@ const mongoDbSession = ConnectMongoDBSession(session);
     `${rootDir}/protocols/**/**.ts`,
   ],
   passport: {
-    userInfoModel: User,
+    userInfoModel: UserInfo,
   },
   views: {
     root: `${rootDir}/views`,
