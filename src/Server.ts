@@ -38,6 +38,11 @@ const mongoDbSession = ConnectMongoDBSession(session);
   passport: {
     userInfoModel: UserInfo,
   },
+  ajv: {
+    errorFormatter: (error) =>
+      `At ${error.modelName}${error.schemaPath}, value '${error.data}' ${error.message}`,
+    verbose: true,
+  },
   views: {
     root: `${rootDir}/views`,
     extensions: {

@@ -6,16 +6,6 @@ import { UserProps } from "../models/interfaces/UserProps";
 import { AbstractService } from "./base/AbstractService";
 import { EncryptPasswordInterceptor } from "../interceptors/EncryptPasswordInterceptor";
 
-const defaultUser: UserProps = {
-  id: "",
-  details: {
-    firstName: "Admin",
-    lastName: "Admin",
-  },
-  email: "admin@localhost",
-  password: "password",
-};
-
 @Service()
 export class UserService extends AbstractService<User, MongooseModel<User>> {
   @Inject(User)
@@ -46,3 +36,13 @@ export class UserService extends AbstractService<User, MongooseModel<User>> {
     return this.User;
   }
 }
+
+const defaultUser: UserProps = {
+  id: "",
+  details: {
+    firstName: "Admin",
+    lastName: "Admin",
+  },
+  email: "admin@localhost",
+  password: "password",
+};

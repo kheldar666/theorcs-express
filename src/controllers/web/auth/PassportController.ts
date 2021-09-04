@@ -1,14 +1,14 @@
 import { BodyParams, Controller, Get, Post, Redirect, Req } from "@tsed/common";
 import { Authenticate } from "@tsed/passport";
-import { Credentials } from "../../../models/interfaces/Credentials";
 import { UserDetails } from "../../../models/UserDetails";
+import { LoginData } from "../../../models/forms/LoginData";
 
 @Controller("/auth")
 export class PassportController {
   @Post("/login")
   @Authenticate("login")
   @Redirect(302, "/")
-  async login(@Req() req: Req, @BodyParams() credentials: Credentials) {
+  async login(@Req() req: Req, @BodyParams() loginData: LoginData) {
     if (!req.isAuthenticated()) {
       await req.flash("error", "Invalid Credentials");
     } else {
