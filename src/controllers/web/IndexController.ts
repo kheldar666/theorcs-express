@@ -12,8 +12,11 @@ import { UserService } from "../../services/UserService";
 import { Inject } from "@tsed/di";
 import { MongooseModel } from "@tsed/mongoose";
 import { LocalsMiddleware } from "../../middlewares/LocalsMiddleware";
+import { baseLocale } from "../../i18n/i18n-util";
+import { i18nMiddleware } from "../../middlewares/i18nMiddleware";
 
 @Controller("/")
+@Use(i18nMiddleware)
 @Use(LocalsMiddleware)
 export class IndexController {
   @Inject(User)
@@ -21,19 +24,18 @@ export class IndexController {
 
   constructor(private userService: UserService) {}
 
-  @Get("/")
+  @Get("/:locale/")
   @View("index.ejs")
-  get(@Req() req: Req) {
-    return {
-      reqIsAuthenticated: req.isAuthenticated(),
-      reqUser: req.user,
-    };
-  }
+  get(@Req() req: Req) {}
 
-  @Get("/set")
+  @Get("/:locale/set")
   @Redirect(302, "/")
   async set(@Session() session: any, @Req() req: Req) {
     await req.flash("error", "Test Error Flash Message");
     await req.flash("info", "Test Info Flash Message");
   }
+
+  @Get("/")
+  @Redirect(301, `/${baseLocale}/`)
+  root() {}
 }

@@ -100,6 +100,5 @@ export class Server {
       .use(csurf())
       .use(InitSession)
       .use(FlashErrorMessage);
-    //.use(LocalsMiddleware);
   }
 }

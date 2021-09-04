@@ -6,11 +6,13 @@
     "build": "npm run tsc",
     "tsc": "tsc --project tsconfig.compile.json",
     "tsc:w": "tsc --project tsconfig.json -w",
-    "start": "cross-env NODE_ENV=dev tsnd  --unhandled-rejections=strict  --trace-deprecation  --trace-warnings  --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
+    "start": "npm-run-all --parallel start:dev typesafe-i18n-generator",
+    "start:dev": "cross-env NODE_ENV=dev tsnd  --unhandled-rejections=strict  --trace-deprecation  --trace-warnings  --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
     "start:prod": "cross-env NODE_ENV=production node dist/index.js",
     "test": "npm run test:unit && npm run test:coverage",
     "test:unit": "cross-env NODE_ENV=test mocha",
-    "test:coverage": "cross-env NODE_ENV=test nyc mocha"
+    "test:coverage": "cross-env NODE_ENV=test nyc mocha",
+    "typesafe-i18n-generator": "typesafe-i18n"
   },
   "dependencies": {
     "@tsed/ajv": "^6.64.1",
@@ -44,7 +46,8 @@
     "nodemailer": "^6.6.3",
     "nodemailer-mailgun-transport": "^2.1.3",
     "passport": "^0.4.1",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "typesafe-i18n": "^2.37.4"
   },
   "devDependencies": {
     "@tsed/cli-plugin-mocha": "3.11.2",
@@ -73,6 +76,7 @@
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
     "mocha": "^9.1.1",
+    "npm-run-all": "^4.1.5",
     "nyc": "^15.1.0",
     "sinon": "^11.1.2",
     "sinon-chai": "^3.7.0",

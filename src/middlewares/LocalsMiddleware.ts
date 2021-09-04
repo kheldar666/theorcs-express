@@ -1,4 +1,11 @@
-import { $log, IMiddleware, Locals, Middleware, Req } from "@tsed/common";
+import {
+  $log,
+  Context,
+  IMiddleware,
+  Locals,
+  Middleware,
+  Req,
+} from "@tsed/common";
 import { LogLevel } from "../config/logger/LogLevel";
 import { Inject } from "@tsed/di";
 import { UserService } from "../services/UserService";
@@ -9,7 +16,11 @@ export class LocalsMiddleware implements IMiddleware {
   @Inject()
   userService: UserService;
 
-  async use(@Locals() locals: any, @Req() req: Req): Promise<void> {
+  async use(
+    @Locals() locals: any,
+    @Req() req: Req,
+    @Context() ctx: Context
+  ): Promise<void> {
     if ($log.isLevelEnabled(LogLevel.DEBUG)) {
       $log.debug({
         Context: "LocalsMiddleware.use",
@@ -33,5 +44,6 @@ export class LocalsMiddleware implements IMiddleware {
       locals.currentUser = undefined;
     }
     locals.csrfToken = req.csrfToken();
+    locals.i18n = ctx.get("i18n");
   }
 }
