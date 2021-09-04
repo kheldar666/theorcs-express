@@ -16,8 +16,8 @@ import { baseLocale } from "../../i18n/i18n-util";
 import { i18nMiddleware } from "../../middlewares/i18nMiddleware";
 
 @Controller("/")
-@Use(i18nMiddleware)
 @Use(LocalsMiddleware)
+@Use(i18nMiddleware) // Must be set here so that it executes before LocalsMiddleware
 export class IndexController {
   @Inject(User)
   private User: MongooseModel<User>;
