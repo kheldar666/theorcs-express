@@ -24,6 +24,8 @@ export class ResourceNotFoundFilter implements ExceptionFilterMethods {
       .status(exception.status)
       .render("errors/404.ejs", error);
 
+    console.log(result);
+
     return result;
   }
 }
