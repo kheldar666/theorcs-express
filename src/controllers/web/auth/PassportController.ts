@@ -10,9 +10,9 @@ export class PassportController {
     failureRedirect: "/",
     failureFlash: "Invalid Credentials",
   })
-  @Redirect(302, "/")
+  @Redirect(302, "back")
   async login(@Req() req: Req, @BodyParams() loginData: LoginData) {
-    await req.flash("error", "Invalid Credentials");
+    await req.flash("info", "Login Successful");
   }
 
   @Post("/signup")

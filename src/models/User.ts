@@ -3,6 +3,7 @@ import { Model, ObjectID } from "@tsed/mongoose";
 import { UserProps } from "./interfaces/UserProps";
 import bcrypt from "bcryptjs";
 import { UserDetails } from "./UserDetails";
+import { Role } from "./auth/Role";
 
 @Model({ schemaOptions: { timestamps: true } })
 export class User implements UserProps {
@@ -25,6 +26,10 @@ export class User implements UserProps {
 
   @Property()
   details?: UserDetails;
+
+  @Property()
+  @Required()
+  roles: Role[];
 
   get id(): string {
     return this._id;

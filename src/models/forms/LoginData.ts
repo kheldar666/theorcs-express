@@ -10,4 +10,7 @@ export class LoginData {
   password: string;
 
   rememberMe?: boolean;
+
+  @Required()
+  mescouilles: string;
 }

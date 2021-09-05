@@ -1,0 +1,28 @@
+<%- include('../includes/head.ejs') %>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3">
+            <h2>Left Column</h2>
+        </div>
+        <div class="col-6">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Library</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Data</li>
+                </ol>
+            </nav>
+            <%- include('../includes/messages.ejs') %>
+            <h2>Admin Home</h2>
+        </div>
+        <div class="col-3">
+            <% if(isAuthenticated) { %>
+                <%- include('../includes/auth/usercard.ejs') %>
+            <% } else { %>
+                <%- include('../includes/auth/forms/login.ejs') %>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<%- include('../includes/end.ejs') %>

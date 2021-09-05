@@ -16,7 +16,12 @@ import session from "express-session";
 import { flash } from "express-flash-message";
 import { InitSession } from "./middlewares/InitSession";
 import { FlashErrorMessage } from "./middlewares/FlashErrorMessage";
-import { UserInfo } from "@tsed/passport";
+//Custom 404 Page
+import "./filters/ResourceNotFoundFilter";
+
+import "./filters/HttpExceptionFilter";
+
+import { UserInfoWithRoles } from "./models/auth/UserInfoWithRoles";
 
 const mongoDbSession = ConnectMongoDBSession(session);
 
@@ -36,7 +41,7 @@ const mongoDbSession = ConnectMongoDBSession(session);
     `${rootDir}/protocols/**/**.ts`,
   ],
   passport: {
-    userInfoModel: UserInfo,
+    userInfoModel: UserInfoWithRoles,
   },
   ajv: {
     errorFormatter: (error) =>

@@ -6,7 +6,6 @@ import {
   Middleware,
   Req,
 } from "@tsed/common";
-import { LogLevel } from "../config/logger/LogLevel";
 import { Inject } from "@tsed/di";
 import { UserService } from "../services/UserService";
 import { UserInfo } from "@tsed/passport";
@@ -21,24 +20,21 @@ export class LocalsMiddleware implements IMiddleware {
     @Req() req: Req,
     @Context() ctx: Context
   ): Promise<void> {
-    if ($log.isLevelEnabled(LogLevel.DEBUG)) {
-      $log.debug({
-        Context: "LocalsMiddleware.use",
-        isAuthenticated: req.isAuthenticated(),
-      });
-    }
+    $log.debug({
+      Context: "LocalsMiddleware.use",
+      isAuthenticated: req.isAuthenticated(),
+    });
     if (req.isAuthenticated()) {
+      console.log("req.user", req.user);
       locals.isAuthenticated = true;
       const currentUser = await this.userService.findById(
         (req.user as UserInfo).id
       );
       locals.currentUser = currentUser;
-      if ($log.isLevelEnabled(LogLevel.DEBUG)) {
-        $log.debug({
-          Context: "LocalsMiddleware.use",
-          currentUser: currentUser,
-        });
-      }
+      $log.debug({
+        Context: "LocalsMiddleware.use",
+        currentUser: currentUser,
+      });
     } else {
       locals.isAuthenticated = false;
       locals.currentUser = undefined;

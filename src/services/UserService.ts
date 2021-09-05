@@ -5,6 +5,7 @@ import { $log } from "@tsed/common";
 import { UserProps } from "../models/interfaces/UserProps";
 import { AbstractService } from "./base/AbstractService";
 import { EncryptPasswordInterceptor } from "../interceptors/EncryptPasswordInterceptor";
+import { Role } from "../models/auth/Role";
 
 @Service()
 export class UserService extends AbstractService<User, MongooseModel<User>> {
@@ -17,15 +18,40 @@ export class UserService extends AbstractService<User, MongooseModel<User>> {
   }
 
   async initData(): Promise<void> {
-    $log.debug("Initializing User Data");
+    $log.debug({
+      Context: "UserService.initData",
+      message: "Initializing User Data",
+    });
     try {
       await this.findOne({});
-      $log.debug("Found existing data. Initialization not required");
+      $log.debug({
+        Context: "UserService.initData",
+        message: "Found existing data. Initialization not required",
+      });
     } catch (err) {
-      $log.debug("No User data found. Creating a default user");
+      $log.debug({
+        Context: "UserService.initData",
+        message: "No User data found. Creating default users",
+      });
       try {
+        const rootUser = await this.save(new this.model(defaultRootUser));
+        $log.debug({
+          Context: "UserService.initData",
+          message: "Created Root User",
+          user: rootUser,
+        });
+        const adminUser = await this.save(new this.model(defaultAdminUser));
+        $log.debug({
+          Context: "UserService.initData",
+          message: "Created Admin User",
+          user: adminUser,
+        });
         const defUser = await this.save(new this.model(defaultUser));
-        $log.debug("Created Default User", defUser);
+        $log.debug({
+          Context: "UserService.initData",
+          message: "Created Normal User",
+          user: defUser,
+        });
       } catch (err) {
         throw err;
       }
@@ -37,12 +63,35 @@ export class UserService extends AbstractService<User, MongooseModel<User>> {
   }
 }
 
-const defaultUser: UserProps = {
+const defaultRootUser: UserProps = {
+  id: "",
+  details: {
+    firstName: "Root",
+    lastName: "Root",
+  },
+  roles: [Role.ROOT],
+  email: "root@localhost.com",
+  password: "password",
+};
+
+const defaultAdminUser: UserProps = {
   id: "",
   details: {
     firstName: "Admin",
     lastName: "Admin",
   },
-  email: "admin@localhost",
+  roles: [Role.ADMIN],
+  email: "admin@localhost.com",
+  password: "password",
+};
+
+const defaultUser: UserProps = {
+  id: "",
+  details: {
+    firstName: "Normal",
+    lastName: "User",
+  },
+  roles: [Role.USER],
+  email: "admin@localhost.com",
   password: "password",
 };
