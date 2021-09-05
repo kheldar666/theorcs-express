@@ -40,6 +40,7 @@ export class LocalsMiddleware implements IMiddleware {
       locals.currentUser = undefined;
     }
     locals.csrfToken = req.csrfToken();
+    locals.locale = ctx.get("locale");
     locals.i18n = ctx.get("i18n");
   }
 }

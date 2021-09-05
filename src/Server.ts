@@ -16,11 +16,10 @@ import session from "express-session";
 import { flash } from "express-flash-message";
 import { InitSession } from "./middlewares/InitSession";
 import { FlashErrorMessage } from "./middlewares/FlashErrorMessage";
-//Custom 404 Page
+//Custom 404/500 Page
 import "./filters/ResourceNotFoundFilter";
-
+import "./filters/ValidationExceptionFilter";
 import "./filters/HttpExceptionFilter";
-
 import { UserInfoWithRoles } from "./models/auth/UserInfoWithRoles";
 
 const mongoDbSession = ConnectMongoDBSession(session);
@@ -78,7 +77,12 @@ export class Server {
 
     this.app
       .use(cors())
-      .use(helmet())
+      .use(
+        helmet({
+          //Necessary for ValidationExceptionFilter to work properly
+          referrerPolicy: { policy: "same-origin" },
+        })
+      )
       .use(cookieParser())
       .use(compress({}))
       .use(methodOverride())

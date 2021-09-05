@@ -1,9 +1,10 @@
 import {
+  BodyParams,
   Controller,
   Get,
+  Post,
   Redirect,
   Req,
-  Session,
   Use,
   View,
 } from "@tsed/common";
@@ -14,6 +15,7 @@ import { MongooseModel } from "@tsed/mongoose";
 import { LocalsMiddleware } from "../../middlewares/LocalsMiddleware";
 import { baseLocale } from "../../i18n/i18n-util";
 import { i18nMiddleware } from "../../middlewares/i18nMiddleware";
+import { LoginData } from "../../models/forms/LoginData";
 
 @Controller("/")
 @Use(LocalsMiddleware)
@@ -28,12 +30,9 @@ export class IndexController {
   @View("index.ejs")
   get(@Req() req: Req) {}
 
-  @Get("/:locale/set")
-  @Redirect(302, "/")
-  async set(@Session() session: any, @Req() req: Req) {
-    await req.flash("error", "Test Error Flash Message");
-    await req.flash("info", "Test Info Flash Message");
-  }
+  @Post("/:locale/test-validation")
+  @View("index.ejs")
+  testValidation(@Req() req: Req, @BodyParams() loginData: LoginData) {}
 
   @Get("/")
   @Redirect(301, `/${baseLocale}/`)

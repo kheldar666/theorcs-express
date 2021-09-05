@@ -18,6 +18,8 @@ export class i18nMiddleware implements IMiddleware {
     const locale = this.getPreferredLocale(req);
     const i18n = L[locale];
     ctx.set("i18n", i18n);
+    ctx.set("locale", locale);
+
     $log.debug({ Context: "i18nMiddleware.use", selectedLocale: locale });
     $log.debug({ Context: "i18nMiddleware.use", TranslationFunction: i18n });
 

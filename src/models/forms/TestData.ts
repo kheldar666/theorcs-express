@@ -1,6 +1,6 @@
 import { Email, MinLength, Required } from "@tsed/schema";
 
-export class LoginData {
+export class TestData {
   @Required()
   @Email()
   email: string;

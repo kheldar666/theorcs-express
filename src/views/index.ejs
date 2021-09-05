@@ -15,7 +15,22 @@
             <%- include('./includes/messages.ejs') %>
             <h2>Center</h2>
             <div>
-                <a href="/set">Set error</a>
+                <form action="/<%= locale %>/test-validation" method="post">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Test Email</label>
+                        <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputtext" class="form-label">Test Input</label>
+                        <input type="text" class="form-control" name="inputtext" id="inputtext">
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" name="checkbox" id="checkbox">
+                        <label class="form-check-label" for="rememberMe">A Test Checkbox</label>
+                    </div>
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>"/>
+                    <button type="submit" class="btn btn-primary"><%= i18n.VIEWS_BUTTON_SUBMIT() %></button>
+                </form>
             </div>
         </div>
         <div class="col-3">
