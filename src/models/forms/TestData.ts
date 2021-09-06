@@ -7,7 +7,7 @@ export class TestData {
 
   @Required()
   @MinLength(8)
-  password: string;
+  inputText: string;
 
   rememberMe?: boolean;
 }

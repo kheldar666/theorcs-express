@@ -1,30 +1,21 @@
-import { $log, Context, IMiddleware, Locals, Middleware } from "@tsed/common";
+import { Context, IMiddleware, Locals, Middleware } from "@tsed/common";
 
 @Middleware()
 export class FlashErrorMessage implements IMiddleware {
   async use(@Locals() locals: any, @Context() context: Context) {
-    const errMessage = await context.getRequest().consumeFlash("error");
     const infMessage = await context.getRequest().consumeFlash("info");
 
-    context.logger.info({
-      message: "errMessage",
-      data: errMessage,
-    });
+    const ajvErrors = await context.getRequest().consumeFlash("ajvErrors");
 
-    $log.info({
-      message: "errMessage",
-      data: errMessage,
-    });
+    locals.flashErrors = [];
+    locals.flashInfos = [];
 
-    if (errMessage.length > 0) {
-      locals.errorMessage = errMessage[0];
-    } else {
-      locals.errorMessage = null;
+    if (ajvErrors.length > 0) {
+      locals.flashErrors = [...locals.flashErrors, ...ajvErrors[0]];
     }
+
     if (infMessage.length > 0) {
-      locals.infoMessage = infMessage[0];
-    } else {
-      locals.infoMessage = null;
+      locals.infoMessage = [...locals.flashInfos, ...infMessage[0]];
     }
   }
 }

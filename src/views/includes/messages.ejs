@@ -1,12 +1,29 @@
-<% if(infoMessage) { %>
+<% if(flashInfos.length) { %>
     <div class="alert alert-info alert-dismissible fade show" role="alert">
-        <%- infoMessage %>
+        <% if(flashInfos.length > 0) { %>
+            <ul>
+                <% for (var i = 0; i < flashInfos.length; i++) { %>
+                    <li><%- flashInfos[i].message %></li>
+                <% } %>
+            </ul>
+        <% } else { %>
+            <p><%- flashInfos[0].message %></p>
+        <% } %>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 <% } %>
-<% if(errorMessage) { %>
+
+<% if(flashErrors.length) { %>
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <%- errorMessage %>
+        <% if(flashErrors.length > 0) { %>
+            <ul>
+                <% for (var i = 0; i < flashErrors.length; i++) { %>
+                    <li><%- flashErrors[i].message %></li>
+                <% } %>
+            </ul>
+        <% } else { %>
+            <p><%- flashErrors[0].message %></p>
+        <% } %>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 <% } %>

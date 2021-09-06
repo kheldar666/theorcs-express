@@ -15,7 +15,7 @@ import { MongooseModel } from "@tsed/mongoose";
 import { LocalsMiddleware } from "../../middlewares/LocalsMiddleware";
 import { baseLocale } from "../../i18n/i18n-util";
 import { i18nMiddleware } from "../../middlewares/i18nMiddleware";
-import { LoginData } from "../../models/forms/LoginData";
+import { TestData } from "../../models/forms/TestData";
 
 @Controller("/")
 @Use(LocalsMiddleware)
@@ -32,7 +32,7 @@ export class IndexController {
 
   @Post("/:locale/test-validation")
   @View("index.ejs")
-  testValidation(@Req() req: Req, @BodyParams() loginData: LoginData) {}
+  testValidation(@Req() req: Req, @BodyParams() testData: TestData) {}
 
   @Get("/")
   @Redirect(301, `/${baseLocale}/`)
