@@ -45,7 +45,8 @@ const mongoDbSession = ConnectMongoDBSession(session);
   ajv: {
     errorFormatter: (error) =>
       `At ${error.modelName}${error.schemaPath}, value '${error.data}' ${error.message}`,
-    verbose: true,
+    verbose: false,
+    allErrors: true,
   },
   views: {
     root: `${rootDir}/views`,
