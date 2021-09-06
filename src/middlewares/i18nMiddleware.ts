@@ -23,7 +23,7 @@ export class i18nMiddleware implements IMiddleware {
     $log.debug({ Context: "i18nMiddleware.use", selectedLocale: locale });
     $log.debug({ Context: "i18nMiddleware.use", TranslationFunction: i18n });
 
-    if (!req.params["locale"] || req.params["locale"] !== locale.toString()) {
+    if (req.params["locale"] && req.params["locale"] !== locale.toString()) {
       $log.debug({
         Context: "i18nMiddleware.use",
         paramLocale: req.params["locale"],

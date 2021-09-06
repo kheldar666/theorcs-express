@@ -3,7 +3,7 @@ import { Authenticate } from "@tsed/passport";
 import { UserDetails } from "../../../models/UserDetails";
 import { LoginData } from "../../../models/forms/LoginData";
 
-@Controller("/auth")
+@Controller("/:locale/auth")
 export class PassportController {
   @Post("/login")
   @Authenticate("login", {
