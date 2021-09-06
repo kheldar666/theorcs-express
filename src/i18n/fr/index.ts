@@ -8,6 +8,13 @@ const fr: BaseTranslation = {
 
   //Common Text
   VIEWS_BUTTON_SUBMIT: "Envoyer",
+
+  //Info Messages
+  INFO_LOGIN_SUCCESSFUL: "Identification réussie",
+
+  //Errors
+  //Credentials
+  ERROR_INVALID_CREDENTIALS: "Identifiants invalides",
 };
 
 export default fr;

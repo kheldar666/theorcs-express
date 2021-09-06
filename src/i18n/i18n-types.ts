@@ -30,6 +30,14 @@ export type Translation = {
 	 * Submit
 	 */
 	'VIEWS_BUTTON_SUBMIT': string
+	/**
+	 * Login successful
+	 */
+	'INFO_LOGIN_SUCCESSFUL': string
+	/**
+	 * Invalid Credentials
+	 */
+	'ERROR_INVALID_CREDENTIALS': string
 }
 
 export type TranslationFunctions = {
@@ -53,6 +61,14 @@ export type TranslationFunctions = {
 	 * Submit
 	 */
 	'VIEWS_BUTTON_SUBMIT': () => LocalizedString
+	/**
+	 * Login successful
+	 */
+	'INFO_LOGIN_SUCCESSFUL': () => LocalizedString
+	/**
+	 * Invalid Credentials
+	 */
+	'ERROR_INVALID_CREDENTIALS': () => LocalizedString
 }
 
 export type Formatters = {}

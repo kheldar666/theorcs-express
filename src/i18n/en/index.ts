@@ -8,6 +8,13 @@ const en: BaseTranslation = {
 
   //Common Text
   VIEWS_BUTTON_SUBMIT: "Submit",
+
+  //Info Messages
+  INFO_LOGIN_SUCCESSFUL: "Login successful",
+
+  //Errors
+  //Credentials
+  ERROR_INVALID_CREDENTIALS: "Invalid Credentials",
 };
 
 export default en;

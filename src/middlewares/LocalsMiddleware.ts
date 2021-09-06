@@ -21,10 +21,6 @@ export class LocalsMiddleware implements IMiddleware {
     @Req() req: Req,
     @Context() ctx: Context
   ): Promise<void> {
-    $log.debug({
-      Context: "LocalsMiddleware.use",
-      isAuthenticated: req.isAuthenticated(),
-    });
     if (req.isAuthenticated()) {
       console.log("req.user", req.user);
       locals.isAuthenticated = true;
@@ -44,5 +40,10 @@ export class LocalsMiddleware implements IMiddleware {
     locals.locale = ctx.get("locale");
     locals.i18n = ctx.get("i18n");
     locals.isProduction = isProduction;
+
+    $log.debug({
+      Context: "LocalsMiddleware.use",
+      locals: locals,
+    });
   }
 }

@@ -22,7 +22,8 @@ if (isProduction) {
 
 export const loggerConfig: Partial<PlatformLoggerSettings> = {
   disableRoutesSummary: isProduction,
+
   level: process.env.LOG_LEVEL
-    ? LogLevel[process.env.LOG_LEVEL as keyof typeof LogLevel]
-    : "info",
+      ? LogLevel[process.env.LOG_LEVEL as keyof typeof LogLevel]
+      : "info",
 };
