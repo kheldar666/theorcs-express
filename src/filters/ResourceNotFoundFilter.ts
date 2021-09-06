@@ -1,13 +1,8 @@
-import {
-  $log,
-  Catch,
-  ExceptionFilterMethods,
-  PlatformContext,
-  ResourceNotFound,
-} from "@tsed/common";
+import { $log, Catch, PlatformContext, ResourceNotFound } from "@tsed/common";
+import { AbstractExceptionFilter } from "./AbstractExceptionFilter";
 
 @Catch(ResourceNotFound)
-export class ResourceNotFoundFilter implements ExceptionFilterMethods {
+export class ResourceNotFoundFilter extends AbstractExceptionFilter {
   async catch(exception: ResourceNotFound, ctx: PlatformContext) {
     const { response } = ctx;
 
@@ -19,8 +14,7 @@ export class ResourceNotFoundFilter implements ExceptionFilterMethods {
 
     $log.debug({ Context: "ResourceNotFoundFilter.catch", error: error });
 
-    //response.status(exception.status).body(error);
-    const result = await response.render("errors/404.ejs", error);
+    const result = await response.render("errors/404.ejs", { error: error });
     return response.status(exception.status).body(result);
   }
 }

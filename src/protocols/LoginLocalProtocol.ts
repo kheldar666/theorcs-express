@@ -3,7 +3,7 @@ import { OnInstall, OnVerify, Protocol } from "@tsed/passport";
 import { IStrategyOptions, Strategy } from "passport-local";
 import { UserService } from "../services/UserService";
 import { Credentials } from "../models/interfaces/Credentials";
-import { Unauthorized } from "@tsed/exceptions";
+import { InvalidCredentialsException } from "../exceptions/InvalidCredentialsException";
 
 @Protocol<IStrategyOptions>({
   name: "login",
@@ -25,7 +25,7 @@ export class LoginLocalProtocol implements OnVerify, OnInstall {
     try {
       const user = await this.userService.findOne({ email: email });
       if (!user.verifyPassword(password)) {
-        throw new Unauthorized("Passwords do not match");
+        throw new InvalidCredentialsException("Passwords do not match");
       }
       $log.debug({
         Context: "LoginLocalProtocol.$onVerify",
@@ -33,9 +33,8 @@ export class LoginLocalProtocol implements OnVerify, OnInstall {
       });
       return user;
     } catch (error) {
-      $log.info({ Context: "LoginLocalProtocol.$onVerify", error: error });
-      return false;
-      // throw new Unauthorized("Invalid Credentials");
+      $log.debug({ Context: "LoginLocalProtocol.$onVerify", error: error });
+      throw new InvalidCredentialsException("Invalid Credentials");
     }
   }
 

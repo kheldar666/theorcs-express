@@ -9,6 +9,7 @@ import {
 import { Inject } from "@tsed/di";
 import { UserService } from "../services/UserService";
 import { UserInfo } from "@tsed/passport";
+import { isProduction } from "../config/env";
 
 @Middleware()
 export class LocalsMiddleware implements IMiddleware {
@@ -42,5 +43,6 @@ export class LocalsMiddleware implements IMiddleware {
     locals.csrfToken = req.csrfToken();
     locals.locale = ctx.get("locale");
     locals.i18n = ctx.get("i18n");
+    locals.isProduction = isProduction;
   }
 }

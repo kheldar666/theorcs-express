@@ -1,14 +1,10 @@
-import {
-  Catch,
-  ExceptionFilterMethods,
-  ParamValidationError,
-  PlatformContext,
-  ResponseErrorObject,
-} from "@tsed/common";
+import { Catch, ParamValidationError, PlatformContext } from "@tsed/common";
 import { Exception } from "@tsed/exceptions";
+import { InvalidCredentialsException } from "../exceptions/InvalidCredentialsException";
+import { AbstractExceptionFilter } from "./AbstractExceptionFilter";
 
-@Catch(ParamValidationError)
-export class ValidationExceptionFilter implements ExceptionFilterMethods {
+@Catch(ParamValidationError, InvalidCredentialsException)
+export class ValidationExceptionFilter extends AbstractExceptionFilter {
   catch(exception: Exception, ctx: PlatformContext) {
     const { response, logger } = ctx;
     const error = this.mapError(exception);
@@ -23,33 +19,5 @@ export class ValidationExceptionFilter implements ExceptionFilterMethods {
       headers,
     });
     response.setHeaders(headers).status(error.status).body(error);
-  }
-
-  mapError(error: any) {
-    return {
-      name: error.origin?.name || error.name,
-      message: error.message,
-      status: error.status || 500,
-      errors: this.getErrors(error),
-    };
-  }
-
-  protected getErrors(error: any) {
-    return [error, error.origin]
-      .filter(Boolean)
-      .reduce((errs, { errors }: ResponseErrorObject) => {
-        return [...errs, ...(errors || [])];
-      }, []);
-  }
-
-  protected getHeaders(error: any) {
-    return [error, error.origin]
-      .filter(Boolean)
-      .reduce((obj, { headers }: ResponseErrorObject) => {
-        return {
-          ...obj,
-          ...(headers || {}),
-        };
-      }, {});
   }
 }

@@ -10,5 +10,13 @@
             </main>
         </div>
     </div>
+    <% if(!isProduction) { %>
+        <div class="row">
+            <div class="col-12">
+                <h3><%= error.name %></h3>
+                <p><%= error.message %></p>
+            </div>
+        </div>
+    <% } %>
 </div>
 <%- include('../includes/end.ejs') %>
