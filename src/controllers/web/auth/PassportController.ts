@@ -27,6 +27,7 @@ export class PassportController {
     @Context() ctx: Context
   ) {
     const i18n = ctx.get("i18n");
+
     await req.flash("info", i18n.INFO_LOGIN_SUCCESSFUL());
   }
 
