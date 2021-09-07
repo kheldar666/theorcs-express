@@ -3,7 +3,6 @@ import {
   Controller,
   Get,
   Post,
-  Redirect,
   Req,
   Use,
   View,
@@ -13,11 +12,10 @@ import { UserService } from "../../services/UserService";
 import { Inject } from "@tsed/di";
 import { MongooseModel } from "@tsed/mongoose";
 import { LocalsMiddleware } from "../../middlewares/LocalsMiddleware";
-import { baseLocale } from "../../i18n/i18n-util";
 import { i18nMiddleware } from "../../middlewares/i18nMiddleware";
 import { TestData } from "../../models/forms/TestData";
 
-@Controller("/")
+@Controller("/:locale")
 @Use(LocalsMiddleware)
 @Use(i18nMiddleware) // Must be set here so that it executes before LocalsMiddleware
 export class IndexController {
@@ -26,15 +24,13 @@ export class IndexController {
 
   constructor(private userService: UserService) {}
 
-  @Get("/:locale/")
-  @View("index.ejs")
-  get(@Req() req: Req) {}
-
-  @Post("/:locale/test-validation")
-  @View("index.ejs")
-  testValidation(@Req() req: Req, @BodyParams() testData: TestData) {}
-
   @Get("/")
-  @Redirect(301, `/${baseLocale}/`)
-  root() {}
+  @View("index.ejs")
+  index() {}
+
+  @Post("/test-validation")
+  @View("index.ejs")
+  testValidation(@Req() req: Req, @BodyParams() testData: TestData) {
+    const delta = testData.deltaContent;
+  }
 }

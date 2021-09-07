@@ -4,6 +4,7 @@ import { Context, IMiddleware, Locals, Middleware } from "@tsed/common";
 export class FlashErrorMessage implements IMiddleware {
   async use(@Locals() locals: any, @Context() context: Context) {
     const infMessage: string = await context.getRequest().consumeFlash("info");
+    const errMessage: string = await context.getRequest().consumeFlash("error");
 
     const ajvErrors: any[] = await context
       .getRequest()
@@ -17,6 +18,10 @@ export class FlashErrorMessage implements IMiddleware {
       for (const key in ajvErrors[0]) {
         locals.flashErrors.push(ajvErrors[0][key].message);
       }
+    }
+
+    if (errMessage.length > 0) {
+      locals.flashErrors = [...locals.flashErrors, ...errMessage];
     }
 
     if (infMessage.length > 0) {

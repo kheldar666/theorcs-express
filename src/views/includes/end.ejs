@@ -1,4 +1,6 @@
 <%- include('./footer.ejs') %>
 <script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/js/jquery-3.6.0.min.js"></script>
+<%- include('./tools/quill.ejs',{container:'#snow-container', submitBtn:'#submitBtn', formName:'aForm', htmlInput:'#htmlContent', deltaInput:'#deltaContent'}) %>
 </body>
 </html>

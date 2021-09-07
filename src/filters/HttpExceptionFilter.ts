@@ -1,6 +1,7 @@
 import { Catch, PlatformContext } from "@tsed/common";
 import { Exception } from "@tsed/exceptions";
 import { AbstractExceptionFilter } from "./AbstractExceptionFilter";
+import { isProduction } from "../config/env";
 
 @Catch(Exception)
 export class HttpExceptionFilter extends AbstractExceptionFilter {
@@ -18,7 +19,10 @@ export class HttpExceptionFilter extends AbstractExceptionFilter {
       error,
     });
     //response.setHeaders(headers).status(error.status).body(error);
-    const result = await response.render("errors/500.ejs", { error: error });
+    const result = await response.render("errors/500.ejs", {
+      error: error,
+      isProduction: isProduction,
+    });
     return response.setHeaders(headers).status(exception.status).body(result);
   }
 }

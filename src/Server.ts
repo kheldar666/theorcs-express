@@ -20,7 +20,8 @@ import { FlashErrorMessage } from "./middlewares/FlashErrorMessage";
 import "./filters/ResourceNotFoundFilter";
 import "./filters/ValidationExceptionFilter";
 import "./filters/HttpExceptionFilter";
-import { UserInfoWithRoles } from "./models/auth/UserInfoWithRoles";
+import { UserInfo } from "@tsed/passport";
+import { CspNonceMiddleware } from "./middlewares/CspNonceMiddleware";
 
 const mongoDbSession = ConnectMongoDBSession(session);
 
@@ -40,7 +41,7 @@ const mongoDbSession = ConnectMongoDBSession(session);
     `${rootDir}/protocols/**/**.ts`,
   ],
   passport: {
-    userInfoModel: UserInfoWithRoles,
+    userInfoModel: UserInfo,
   },
   ajv: {
     errorFormatter: (error) =>
@@ -58,7 +59,10 @@ const mongoDbSession = ConnectMongoDBSession(session);
     "/": [
       {
         root: `${rootDir}/public`,
-        options: { index: false, maxAge: "1d" },
+        options: {
+          index: false,
+          maxAge: "1d",
+        },
       },
     ],
   },
@@ -78,19 +82,31 @@ export class Server {
 
     this.app
       .use(cors())
+      .use(CspNonceMiddleware)
       .use(
         helmet({
           //Necessary for ValidationExceptionFilter to work properly
           referrerPolicy: { policy: "same-origin" },
+          contentSecurityPolicy: {
+            useDefaults: true,
+            directives: {
+              scriptSrc: [
+                "'self'",
+                //@ts-ignore
+                (req, res) => `'nonce-${res.locals.cspNonce}'`,
+              ],
+            },
+          },
         })
       )
       .use(cookieParser())
       .use(compress({}))
       .use(methodOverride())
-      .use(bodyParser.json())
+      .use(bodyParser.json({ limit: process.env.MAX_REQUEST_SIZE }))
       .use(
         bodyParser.urlencoded({
           extended: true,
+          limit: process.env.MAX_REQUEST_SIZE,
         })
       )
       .use(
