@@ -23,10 +23,6 @@ export type Translation = {
 	 */
 	'VIEWS_LOGIN_PASSWORD': string
 	/**
-	 * Remember Me
-	 */
-	'VIEWS_LOGIN_REMEMBER_ME': string
-	/**
 	 * Submit
 	 */
 	'VIEWS_BUTTON_SUBMIT': string
@@ -53,10 +49,6 @@ export type TranslationFunctions = {
 	 * Password
 	 */
 	'VIEWS_LOGIN_PASSWORD': () => LocalizedString
-	/**
-	 * Remember Me
-	 */
-	'VIEWS_LOGIN_REMEMBER_ME': () => LocalizedString
 	/**
 	 * Submit
 	 */

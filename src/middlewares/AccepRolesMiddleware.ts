@@ -1,6 +1,7 @@
 import { EndpointInfo, Locals, Middleware, Req } from "@tsed/common";
 import { Unauthorized } from "@tsed/exceptions";
 import { User } from "../models/User";
+import { Role } from "../models/auth/Role";
 
 @Middleware()
 export class AcceptRolesMiddleware {
@@ -9,12 +10,18 @@ export class AcceptRolesMiddleware {
     @Locals() locals: any,
     @EndpointInfo() endpoint: EndpointInfo
   ) {
-    if (request.user && request.isAuthenticated()) {
-      const roles = endpoint.get(AcceptRolesMiddleware);
+    if (request.isAuthenticated()) {
+      const acceptRoles: Role[] = endpoint.get(AcceptRolesMiddleware);
+      const usersRoles: Role[] = (locals.currentUser as User).roles;
+      const rolesInCommon = acceptRoles.filter((role) => {
+        return usersRoles.indexOf(role);
+      });
 
-      if (!roles.includes((locals.currentUser as User).roles)) {
+      if (!rolesInCommon.length) {
         throw new Unauthorized("Insufficient role");
       }
+    } else {
+      throw new Unauthorized("User Not Authenticated");
     }
   }
 }
