@@ -64,7 +64,6 @@ export class UserService extends AbstractService<User, MongooseModel<User>> {
 }
 
 const defaultRootUser: UserProps = {
-  id: "",
   details: {
     firstName: "Root",
     lastName: "Root",
@@ -75,7 +74,6 @@ const defaultRootUser: UserProps = {
 };
 
 const defaultAdminUser: UserProps = {
-  id: "",
   details: {
     firstName: "Admin",
     lastName: "Admin",
@@ -86,7 +84,6 @@ const defaultAdminUser: UserProps = {
 };
 
 const defaultUser: UserProps = {
-  id: "",
   details: {
     firstName: "Normal",
     lastName: "User",

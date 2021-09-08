@@ -1,11 +1,9 @@
 export class TestData {
-  email: string;
+  emailTest: string;
 
   inputText: string;
 
   htmlContent: string;
 
   deltaContent: {};
-
-  rememberMe?: boolean;
 }

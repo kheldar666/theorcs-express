@@ -1,35 +1,31 @@
-import { Description, Example, Format, Property, Required } from "@tsed/schema";
+import { Property, Required } from "@tsed/schema";
 import { Model, ObjectID } from "@tsed/mongoose";
 import { UserProps } from "./interfaces/UserProps";
 import bcrypt from "bcryptjs";
 import { UserDetails } from "./UserDetails";
 import { Role } from "./auth/Role";
+import { Identity } from "./interfaces/Identity";
 
 @Model({ schemaOptions: { timestamps: true } })
-export class User implements UserProps {
+export class User implements UserProps, Identity {
+  // Must keep this "id" in order to be properly mapped with UserInfo from Passport
   @ObjectID("id")
-  @Description("Database assigned id")
   _id: string;
 
-  @Description("User password")
-  @Example("/5gftuD/")
   @Property()
   @Required()
   password: string;
 
-  @Description("User email")
-  @Example("user@domain.com")
-  @Format("email")
   @Property()
   @Required()
   email: string;
 
   @Property()
-  details?: UserDetails;
-
-  @Property()
   @Required()
   roles: Role[];
+
+  @Property()
+  details?: UserDetails;
 
   get id(): string {
     return this._id;

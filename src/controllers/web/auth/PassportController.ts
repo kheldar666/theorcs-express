@@ -6,6 +6,7 @@ import {
   Post,
   Redirect,
   Req,
+  Res,
   Use,
 } from "@tsed/common";
 import { Authenticate } from "@tsed/passport";
@@ -40,7 +41,7 @@ export class PassportController {
 
   @Get("/logout")
   @Redirect(302, "../")
-  logout(@Req() req: Req) {
+  logout(@Req() req: Req, @Res() res: Res) {
     req.logout();
   }
 }

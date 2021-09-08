@@ -21,6 +21,10 @@ export class LocalsMiddleware implements IMiddleware {
     @Req() req: Req,
     @Context() ctx: Context
   ): Promise<void> {
+    $log.debug({
+      Context: "LocalsMiddleware.use",
+      message: "Starting",
+    });
     if (req.isAuthenticated()) {
       console.log("req.user", req.user);
       locals.isAuthenticated = true;

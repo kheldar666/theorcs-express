@@ -36,10 +36,10 @@ export abstract class AbstractService<T, K extends MongooseModel<T>>
   async findOne(predicate: Partial<T>): Promise<T> {
     $log.debug({ Context: "AbstractService.findOne", predicate: predicate });
     // @ts-ignore
-    const aUser = await this.model.findOne(predicate);
-    if (aUser) {
-      $log.debug({ Context: "AbstractService.findOne", result: aUser });
-      return aUser;
+    const anObject = await this.model.findOne(predicate);
+    if (anObject) {
+      $log.debug({ Context: "AbstractService.findOne", result: anObject });
+      return anObject;
     }
     throw new NotFound("Object not found");
   }

@@ -1,8 +1,6 @@
-import { Identity } from "./Identity";
 import { Role } from "../auth/Role";
 
-export interface Credentials extends Identity {
-  id: string;
+export interface Credentials {
   password: string;
   email: string;
   roles: Role[];

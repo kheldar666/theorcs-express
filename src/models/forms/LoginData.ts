@@ -8,6 +8,4 @@ export class LoginData {
   @Required()
   @MinLength(8)
   password: string;
-
-  rememberMe?: boolean;
 }
