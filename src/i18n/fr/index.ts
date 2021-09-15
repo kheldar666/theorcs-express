@@ -1,6 +1,6 @@
-import type { BaseTranslation } from "typesafe-i18n";
+import type { Translation } from "../i18n-types";
 
-const fr: BaseTranslation = {
+const fr: Translation = {
   VIEWS_LOGIN_EMAIL_LABEL: "Votre adresse mél",
   VIEWS_LOGIN_EMAIL_HELP: "Nous ne partagerons votre email avec personne.",
   VIEWS_LOGIN_PASSWORD: "Mot de passe",
